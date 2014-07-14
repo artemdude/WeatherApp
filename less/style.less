@@ -1,0 +1,93 @@
+body{
+  background: #7D1640;
+  font-size: 1.2em;
+}
+
+header{
+  background: #fff;
+
+  .content{
+    padding: 10px 0;
+  }
+}
+
+content{
+  .content{
+    margin-top: 100px;
+    padding: 40px;
+    box-shadow: @shadow;
+    @media (max-width: @screen-sm) {
+      margin-top: 120px;
+    }
+  }
+}
+
+.content {
+  background: #fff;
+  margin: 0 auto 0 auto;
+  max-width: 800px;
+  clear: both;
+}
+
+.navbar{
+  box-shadow: @shadow;
+
+  .navbar-logo-container{
+    float: left;
+
+    @media (max-width: @screen-sm) {
+      float: inherit;
+      text-align: center;
+      margin: 0 0 10px 0;
+    }
+  }
+}
+
+.search-container{
+  width: 400px;
+  position: relative;
+  float: right;
+  @media (max-width: @screen-sm) {
+    text-align: center;
+    float: inherit;
+    margin: 0 40px;
+    width: inherit;
+  }
+
+  .search-field {
+    padding-left: 26px;
+    width: 100%;
+  }
+
+  &:before {
+    display: block;
+    width: 14px;
+    height: 14px;
+    content: "\e003";
+    font-family: 'Glyphicons Halflings';
+    background-position: -48px 0;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    opacity: .5;
+    z-index: 1000;
+  }
+}
+
+.clouds-bg {
+  padding: 0;
+  z-index: -10;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  position: fixed;
+  top:0;
+}
+
+footer{
+  text-align: center;
+  color:#fff;
+  font-size: 1.2em;
+  margin: 20px;
+  padding: 10px;
+}

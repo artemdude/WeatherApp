@@ -2,9 +2,138 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Weather app</title>
+    <link rel="stylesheet/less" type="text/css" href="less/bootstrap/bootstrap.less" />
+    <link rel="icon" href="favicon.ico">
 </head>
 <body>
+<ul class="clouds-bg">
+    <li class="layer" data-depth="1.00">
+        <img class="bg-clouds" src="img/clouds/clouds-bg-2.png">
+    </li>
+    <li class="layer" data-depth="0.3">
+        <img class="bg-clouds" src="img/clouds/clouds-bg-1.png">
+    </li>
+</ul>
+<header class="navbar navbar-fixed-top" id="top" role="banner">
+    <div class="content">
+        <div class="navbar-logo-container">
+            <span class="logo"><img src="img/logo_small.png"></span>
+            <span class="hidden-xs"><img src="img/logo-name.png"></span>
+        </div>
+        <div class="search-container">
+            <input class="form-control search-field" type="text" placeholder="Countries">
+        </div>
+    </div>
+</header>
+<content>
+
+<div class="content row">
+    <div class="col-sm-4">
+        Group a series of buttons together on a single line with the button group. Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.
+        Group a series of buttons together on a single line with the button group.
+
+        <table class="table table-bordered table-striped">
+            <colgroup>
+                <col class="col-xs-1">
+                <col class="col-xs-7">
+            </colgroup>
+            <tbody>
+            <tr>
+                <td>
+                    <code>.active</code>
+                </td>
+                <td>Applies the hover color to a particular row or cell</td>
+            </tr>
+            <tr>
+                <td>
+                    <code>.success</code>
+                </td>
+                <td>Indicates a successful or positive action</td>
+            </tr>
+            <tr>
+                <td>
+                    <code>.info</code>
+                </td>
+                <td>Indicates a neutral informative change or action</td>
+            </tr>
+            <tr>
+                <td>
+                    <code>.warning</code>
+                </td>
+                <td>Indicates a warning that might need attention</td>
+            </tr>
+            <tr>
+                <td>
+                    <code>.danger</code>
+                </td>
+                <td>Indicates a dangerous or potentially negative action</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-8">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#home" role="tab" data-toggle="tab">Home</a></li>
+            <li><a href="#profile" role="tab" data-toggle="tab">Profile</a></li>
+            <li><a href="#messages" role="tab" data-toggle="tab">Messages</a></li>
+            <li><a href="#settings" role="tab" data-toggle="tab">Settings</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="home">
+
+
+            </div>
+            <div class="tab-pane fade " id="profile">
+                Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.
+                Group a series of buttons together on a single line with the button group. Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.
+                Group a series of buttons together on a single line with the button group. Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.
+                Group a series of buttons together on a single line with the button group. Add o
+            </div>
+            <div class="tab-pane fade " id="messages">
+                n optional JavaScript radio and checkbox style behavior with our buttons plugin.
+                Group a series of buttons together on a single line with the button group.
+
+            </div>
+            <div class="tab-pane fade" id="settings">
+                n optional JavaScript radio and checkbox style behavior with our buttons plugin.
+                Group a series of buttons together on a single line with the button group.
+343434
+            </div>
+        </div>
+ Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.
+    Group a series of buttons together on a single line with the button group. Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.Group a series of buttons together on a single line with the button group. Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.
+    </div>
+</div>
+</content>
+<footer>
+    made with ❤
+</footer>
 
 </body>
+<script src="js/libs/jquery.js"></script>
+<script src="js/libs/less.js"></script>
+<script src="js/libs/bootstrap.js"></script>
+<script src="js/libs/parallax.js"></script>
+
+<script>
+    $(function () {
+        $('.clouds-bg').parallax({
+            calibrateX: false,
+            calibrateY: true,
+            invertX: false,
+            invertY: true,
+            limitX: false,
+            limitY: false,
+            scalarX: 2,
+            scalarY: 2,
+            frictionX: 0.1,
+            frictionY: 0.3,
+            originX: 0.0,
+            originY: 0.0
+        });
+    });
+</script>
 </html>
