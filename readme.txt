@@ -11,7 +11,6 @@ less
 maps http://snazzymaps.com/style/1/pale-dawn
 
 
-использовать лесс
 написать тесты
 
         #scene {

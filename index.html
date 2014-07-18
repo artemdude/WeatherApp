@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title>Weather app</title>
     <link rel="stylesheet/less" type="text/css" href="less/bootstrap/bootstrap.less" />
+    <link href="css/nv.d3.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="favicon.ico">
 </head>
 <body>
+
 <ul class="clouds-bg">
     <li class="layer" data-depth="1.00">
         <img class="bg-clouds" src="img/clouds/clouds-bg-2.png">
@@ -29,62 +31,33 @@
 <content>
 
 <div class="content row">
-    <div class="col-sm-4">
-        Group a series of buttons together on a single line with the button group. Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.
-        Group a series of buttons together on a single line with the button group.
-
-        <table class="table table-bordered table-striped">
-            <colgroup>
-                <col class="col-xs-1">
-                <col class="col-xs-7">
-            </colgroup>
-            <tbody>
-            <tr>
-                <td>
-                    <code>.active</code>
-                </td>
-                <td>Applies the hover color to a particular row or cell</td>
-            </tr>
-            <tr>
-                <td>
-                    <code>.success</code>
-                </td>
-                <td>Indicates a successful or positive action</td>
-            </tr>
-            <tr>
-                <td>
-                    <code>.info</code>
-                </td>
-                <td>Indicates a neutral informative change or action</td>
-            </tr>
-            <tr>
-                <td>
-                    <code>.warning</code>
-                </td>
-                <td>Indicates a warning that might need attention</td>
-            </tr>
-            <tr>
-                <td>
-                    <code>.danger</code>
-                </td>
-                <td>Indicates a dangerous or potentially negative action</td>
-            </tr>
-            </tbody>
-        </table>
+    <div id="currentWeatherContainer" class="col-sm-4">
     </div>
     <div class="col-sm-8">
         <ul class="nav nav-tabs" role="tablist">
-            <li class="active"><a href="#home" role="tab" data-toggle="tab">Home</a></li>
-            <li><a href="#profile" role="tab" data-toggle="tab">Profile</a></li>
-            <li><a href="#messages" role="tab" data-toggle="tab">Messages</a></li>
-            <li><a href="#settings" role="tab" data-toggle="tab">Settings</a></li>
+            <li class="active"><a href="#home" role="tab" data-toggle="tab">Main</a></li>
+            <li><a href="#profile" role="tab" data-toggle="tab">Hourly</a></li>
+            <li><a href="#messages" role="tab" data-toggle="tab">Daily</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Charts <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#settings" role="tab" data-toggle="tab">Temperature</a></li>
+                    <li><a href="#settings" role="tab" data-toggle="tab">Wind</a></li>
+                    <li><a href="#settings" role="tab" data-toggle="tab">Pressure</a></li>
+                    <li><a href="#settings" role="tab" data-toggle="tab">Precipitation</a></li>
+                </ul>
+            </li>
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content">
             <div class="tab-pane fade in active" id="home">
 
-
+                <div id="chart1" >
+                    <svg style="height: 500px;"></svg>
+                </div>
             </div>
             <div class="tab-pane fade " id="profile">
                 Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.
@@ -109,7 +82,7 @@
 </div>
 </content>
 <footer>
-    made with ❤
+    made with <a href="http://www.shkolovy.com">❤</a>
 </footer>
 
 </body>
@@ -117,8 +90,179 @@
 <script src="js/libs/less.js"></script>
 <script src="js/libs/bootstrap.js"></script>
 <script src="js/libs/parallax.js"></script>
+<script src="js/libs/underscore.js"></script>
+<script src="js/libs/backbone.js"></script>
+<script src="js/libs/moment.js"></script>
+
+<script src="js/libs/d3.v3.js"></script>
+<script src="js/libs/nv.d3.js"></script>
 
 <script>
+var chart;
+
+nv.addGraph(function() {
+    chart = nv.models.lineChart()
+            .options({
+                margin: {left: 100, bottom: 100},
+                x: function(d,i) { return i},
+                showXAxis: true,
+                showYAxis: true,
+                transitionDuration: 250
+            })
+    ;
+
+    // chart sub-models (ie. xAxis, yAxis, etc) when accessed directly, return themselves, not the parent chart, so need to chain separately
+    chart.xAxis
+            .axisLabel("Time (s)")
+            .tickFormat(d3.format(',.1f'));
+
+    chart.yAxis
+            .axisLabel('Voltage (v)')
+            .tickFormat(d3.format(',.2f'))
+    ;
+
+    d3.select('#chart1 svg')
+            .datum(sinAndCos())
+            .call(chart);
+
+    //TODO: Figure out a good way to do this automatically
+    nv.utils.windowResize(chart.update);
+    //nv.utils.windowResize(function() { d3.select('#chart1 svg').call(chart) });
+
+    chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
+
+    return chart;
+});
+
+function sinAndCos() {
+    var cos = [];
+
+    for (var i = 0; i < 100; i++) {
+        cos.push({x: i, y: .5 * Math.cos(i/10)});
+    }
+
+    return [
+        {
+            values: cos,
+            key: "Cosine Wave",
+            color: "#2ca02c"
+        }
+    ];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //make mustache
+    _.templateSettings = {
+        evaluate: /\{\[([\s\S]+?)\]\}/g,
+        interpolate: /\{\{([\s\S]+?)\}\}/g
+    };
+
+    var CurrentWeatherModel = Backbone.Model.extend({
+        url: 'http://api.openweathermap.org/data/2.5/weather',
+        fetch: function(options){
+            return Backbone.Model.prototype.fetch.call(this, options);
+        },
+        parse: function(response){
+            this.attributes = {
+                city: response.name,
+                country: response.sys.country,
+                sunrise: response.sys.sunrise,
+                sunset: response.sys.sunset,
+                desc: response.weather[0].description,
+                icon: response.weather[0].icon,
+                title: response.weather[0].main,
+                humidity: response.main.humidity,
+                pressure: response.main.pressure,
+                temp: response.main.temp,
+                windDeg: response.wind.deg,
+                windGust: response.wind.gust,
+                windSpeed: response.wind.speed
+            };
+        }
+    });
+
+    var CurrentWeatherView = Backbone.View.extend({
+        el: '#currentWeatherContainer',
+        initialize: function () {
+            this.model.fetch({
+                success: _.bind(function(){
+                    this.render();
+                }, this),
+                data: { q: 'London', units: 'metric'} });
+        },
+        render: function(){
+            var that = this;
+
+            that.$el.html(_.template($('#currentWeatherTemplate').html(), that.model.toJSON()));
+            return that;
+        }
+    });
+
+    var DateTimeHelper = {
+        getShortTime: function(time){
+            return moment(time).format('hh:mm');
+        },
+        getFullDateTime: function(dateTime){
+            return moment(dateTime).format('MMMM Do YYYY, h:mm:ss a')
+        }
+    };
+
+    //todo: move to helper
+    getCssClassByIcon = function(icon){
+        return {
+            '01d': 'sky-clear-day',
+            '02d': 'few-clouds-day',
+            '03d': 'scattered-clouds-day',
+            '04d': 'broken-clouds-day',
+            '09d': 'shower-rain-day',
+            '10d': 'rain-day',
+            '11d': 'thunderstorm-day',
+            '13d': 'snow-day',
+            '50d': 'mist-day',
+            '01n': 'sky-clear-night',
+            '02n': 'few-clouds-night',
+            '03n': 'scattered-clouds-night',
+            '04n': 'broken-clouds-night',
+            '09n': 'shower-rain-night',
+            '10n': 'rain-night',
+            '11n': 'thunderstorm-night',
+            '13n': 'snow-night',
+            '50n': 'mist-night'
+        }[icon];
+    }
+
+    var currentWeatherModel = new CurrentWeatherModel();
+    var c = new CurrentWeatherView({ model: currentWeatherModel });
+
+
     $(function () {
         $('.clouds-bg').parallax({
             calibrateX: false,
@@ -136,4 +280,44 @@
         });
     });
 </script>
+
+<script id="currentWeatherTemplate" type="text/template">
+    <h2>{{ city }}, {{ country }} <i class="{{ getCssClassByIcon(icon) }}"></i> {{ temp }} °C</h2>
+    <div>{{ title }}</div>
+    <div>{{ DateTimeHelper.getFullDateTime() }}</div>
+    <table class="table table-bordered table-striped">
+        <colgroup>
+            <col class="col-xs-1">
+            <col class="col-xs-7">
+        </colgroup>
+        <tbody>
+        <tr>
+            <td>Wind</td>
+            <td>{{ windSpeed }} m/s</td>
+        </tr>
+        <tr>
+            <td>Cloudiness</td>
+            <td>{{ desc }}</td>
+        </tr>
+        <tr>
+            <td>Pressure</td>
+            <td>{{ pressure }} hpa</td>
+        </tr>
+        <tr>
+            <td>Humidity</td>
+            <td>{{ humidity }} %</td>
+        </tr>
+        <tr>
+            <td>Sunrise</td>
+            <td>{{ DateTimeHelper.getShortTime(sunrise) }}</td>
+        </tr>
+        <tr>
+            <td>Sunset</td>
+            <td>{{ DateTimeHelper.getShortTime(sunset) }}</td>
+        </tr>
+        </tbody>
+    </table>
+</script>
+
+
 </html>
