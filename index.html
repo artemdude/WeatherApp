@@ -3,12 +3,13 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Weather app</title>
-    <link rel="stylesheet/less" type="text/css" href="less/bootstrap/bootstrap.less" />
+    <link rel="stylesheet/less" type="text/css" href="less/style.less" />
     <link href="css/nv.d3.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="favicon.ico">
 </head>
 <body>
 
+<!--parallax-->
 <ul class="clouds-bg">
     <li class="layer" data-depth="1.00">
         <img class="bg-clouds" src="img/clouds/clouds-bg-2.png">
@@ -17,6 +18,7 @@
         <img class="bg-clouds" src="img/clouds/clouds-bg-1.png">
     </li>
 </ul>
+
 <header class="navbar navbar-fixed-top" id="top" role="banner">
     <div class="content">
         <div class="navbar-logo-container">
@@ -29,13 +31,13 @@
     </div>
 </header>
 <content>
-
 <div class="content row">
     <div id="currentWeatherContainer" class="col-sm-4">
     </div>
+    <!--tabs-->
     <div class="col-sm-8">
         <ul class="nav nav-tabs" role="tablist">
-            <li class="active"><a href="#home" role="tab" data-toggle="tab">Main</a></li>
+            <li class="active"><a href="#mainTab" role="tab" data-toggle="tab">Main</a></li>
             <li><a href="#profile" role="tab" data-toggle="tab">Hourly</a></li>
             <li><a href="#messages" role="tab" data-toggle="tab">Daily</a></li>
             <li class="dropdown">
@@ -53,24 +55,20 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-            <div class="tab-pane fade in active" id="home">
-
-                <div id="chart1" >
-                    <svg style="height: 500px;"></svg>
-                </div>
+            <div class="tab-pane in active" id="mainTab">
             </div>
-            <div class="tab-pane fade " id="profile">
+            <div class="tab-pane" id="profile">
                 Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.
                 Group a series of buttons together on a single line with the button group. Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.
                 Group a series of buttons together on a single line with the button group. Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.
                 Group a series of buttons together on a single line with the button group. Add o
             </div>
-            <div class="tab-pane fade " id="messages">
+            <div class="tab-pane" id="messages">
                 n optional JavaScript radio and checkbox style behavior with our buttons plugin.
                 Group a series of buttons together on a single line with the button group.
 
             </div>
-            <div class="tab-pane fade" id="settings">
+            <div class="tab-pane" id="settings">
                 n optional JavaScript radio and checkbox style behavior with our buttons plugin.
                 Group a series of buttons together on a single line with the button group.
 343434
@@ -98,82 +96,40 @@
 <script src="js/libs/nv.d3.js"></script>
 
 <script>
-var chart;
 
-nv.addGraph(function() {
-    chart = nv.models.lineChart()
-            .options({
-                margin: {left: 100, bottom: 100},
-                x: function(d,i) { return i},
-                showXAxis: true,
-                showYAxis: true,
-                transitionDuration: 250
-            })
-    ;
 
-    // chart sub-models (ie. xAxis, yAxis, etc) when accessed directly, return themselves, not the parent chart, so need to chain separately
-    chart.xAxis
-            .axisLabel("Time (s)")
-            .tickFormat(d3.format(',.1f'));
 
-    chart.yAxis
-            .axisLabel('Voltage (v)')
-            .tickFormat(d3.format(',.2f'))
-    ;
+var ChartHelper = {
+    formatter: {
+        time: function(date) {
+            return d3.time.format("%H:%M")(new Date(date));
+        },
+        number: d3.format(',.1f')
+    },
+    drawLineChart: function(options){
+        nv.addGraph(function() {
+            var chart = nv.models.lineChart()
+                    .options({
+                        margin: {left: 75, bottom: 50}
+                    });
 
-    d3.select('#chart1 svg')
-            .datum(sinAndCos())
-            .call(chart);
+            chart.xAxis.axisLabel(options.xLabel).tickFormat(options.xFormatter);
+            chart.yAxis.axisLabel(options.yLabel).tickFormat(options.yFormatter);
 
-    //TODO: Figure out a good way to do this automatically
-    nv.utils.windowResize(chart.update);
-    //nv.utils.windowResize(function() { d3.select('#chart1 svg').call(chart) });
+            d3.select('#' + options.svgId).datum(options.dataFun).call(chart);
+            nv.utils.windowResize(chart.update);
 
-    chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
-
-    return chart;
-});
-
-function sinAndCos() {
-    var cos = [];
-
-    for (var i = 0; i < 100; i++) {
-        cos.push({x: i, y: .5 * Math.cos(i/10)});
+            return chart;
+        });
     }
-
-    return [
-        {
-            values: cos,
-            key: "Cosine Wave",
-            color: "#2ca02c"
-        }
-    ];
 }
 
 
+$('a[href="#mainTab"]').on('shown.bs.tab', function (e) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    var currentWeatherModel = new HourlyWeatherModel();
+    var c = new MainTabWeatherView({ model: currentWeatherModel });
+})
 
 
 
@@ -185,11 +141,64 @@ function sinAndCos() {
         interpolate: /\{\{([\s\S]+?)\}\}/g
     };
 
+    ApiUrlFabric = {
+        hourly: 'http://api.openweathermap.org/data/2.5/forecast/hourly',
+        weather: 'http://api.openweathermap.org/data/2.5/weather'
+    };
+
+    var HourlyWeatherModel = Backbone.Model.extend({
+        url: ApiUrlFabric.hourly
+    });
+
+var MainTabWeatherView = Backbone.View.extend({
+    el: '#mainTab',
+    initialize: function () {
+        this.model.fetch({
+            success: _.bind(function(){
+                this.render();
+                this.initChart();
+            }, this),
+            data: { q: 'London', units: 'metric'} });
+    },
+    render: function(){
+        var that = this;
+
+        that.$el.html(_.template($('#mainTabTemplate').html(), that.model.toJSON()));
+        return that;
+    },
+    initChart: function(){
+        var that = this;
+
+        ChartHelper.drawLineChart({
+            xLabel: 'xxx',
+            yLabel: 'yyy',
+            svgId: 'mainTabChart',
+            dataFun: _.bind(that.getChartData, that),
+            yFormatter: ChartHelper.formatter.number,
+            xFormatter: ChartHelper.formatter.time
+        })
+    },
+    getChartData: function(){
+        var result = [],
+            list = this.model.get('list');
+
+        for (var i = 0; i < 11; i++) {
+            result.push({x: new Date(list[i].dt_txt), y: list[i].main.temp });
+        }
+
+        return [{
+            values: result,
+            key: "Temperature",
+            color: "#2ca02c"
+        }];
+    }
+});
+
     var CurrentWeatherModel = Backbone.Model.extend({
-        url: 'http://api.openweathermap.org/data/2.5/weather',
-        fetch: function(options){
-            return Backbone.Model.prototype.fetch.call(this, options);
-        },
+        url: ApiUrlFabric.weather,
+//        fetch: function(options){
+//            return Backbone.Model.prototype.fetch.call(this, options);
+//        },
         parse: function(response){
             this.attributes = {
                 city: response.name,
@@ -281,8 +290,12 @@ function sinAndCos() {
     });
 </script>
 
+<script id="mainTabTemplate" type="text/template">
+     <svg id="mainTabChart" style="height: 200px;"></svg>
+</script>
+
 <script id="currentWeatherTemplate" type="text/template">
-    <h2>{{ city }}, {{ country }} <i class="{{ getCssClassByIcon(icon) }}"></i> {{ temp }} °C</h2>
+    <h2>{{ city }}, {{ country }} <i class="weather-icon {{ getCssClassByIcon(icon) }}"></i> {{ temp }} °C</h2>
     <div>{{ title }}</div>
     <div>{{ DateTimeHelper.getFullDateTime() }}</div>
     <table class="table table-bordered table-striped">
