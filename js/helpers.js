@@ -2,7 +2,7 @@
  * Created by Superman on 7/19/2014.
  */
 
-define(['backbone', 'underscore', 'nv', 'd3'], function(Backbone, _, nv, d3) {
+define(['nv', 'd3', 'moment'], function(nv, d3, moment) {
 
     //make mustache
     _.templateSettings = {

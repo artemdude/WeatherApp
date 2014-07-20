@@ -2,10 +2,14 @@
  * Created by Superman on 7/12/2014.
  */
 
-define(['models/CurrentWeatherModel', 'views/CurrentWeatherView'], function(CurrentWeatherModel, CurrentWeatherView){
-    $(function () {
-        alert('sssssssssssss');
+define(function(require){
+    var parallax = require('parallax'),
+        CurrentWeatherModel = require('models/CurrentWeatherModel'),
+        HourlyWeatherModel = require('models/HourlyWeatherModel'),
+        CurrentWeatherView = require('views/CurrentWeatherView'),
+        MainTabWeatherView = require('views/MainTabWeatherView');
 
+    $(function () {
         $('.clouds-bg').parallax({
             calibrateX: false,
             calibrateY: true,
@@ -25,9 +29,8 @@ define(['models/CurrentWeatherModel', 'views/CurrentWeatherView'], function(Curr
         new CurrentWeatherView({ model: currentWeatherModel });
 
         $('a[href="#mainTab"]').on('shown.bs.tab', function (e) {
-//
-//        var currentWeatherModel = new HourlyWeatherModel();
-//        var c = new MainTabWeatherView({ model: currentWeatherModel });
+            var currentWeatherModel = new HourlyWeatherModel();
+            new MainTabWeatherView({ model: currentWeatherModel });
         })
     });
 });

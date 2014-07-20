@@ -14,14 +14,26 @@ require.config({
         parallax: 'libs/parallax',
         less: 'libs/less',
         bootstrap: 'libs/bootstrap',
+        moment: 'libs/moment',
+
+        templates: '../templates',
 
         app: 'app',
         helpers: 'helpers'
     },
     shim: {
+        app: {
+            deps: ['backbone', 'less', 'bootstrap']
+        },
+        backbone: {
+            deps: ['jquery', 'underscore'],
+            exports: 'Backbone'
+        },
         bootstrap: {
-            exports: 'bootstrap',
             deps: ['jquery']
+        },
+        underscore: {
+            exports: '_'
         },
         d3: {
             exports: 'd3'
@@ -33,4 +45,4 @@ require.config({
     }
 });
 
-require(['app', 'less', 'bootstrap']);
+require(['app']);

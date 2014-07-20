@@ -2,8 +2,8 @@
  * Created by Superman on 7/19/2014.
  */
 
-define(['backbone', 'helpers'], function(Backbone, helpers) {
-    var CurrentWeatherModel = Backbone.Model.extend({
+define(['helpers'], function(helpers) {
+    return Backbone.Model.extend({
         url: helpers.ApiUrlFabric.weather,
 //        fetch: function(options){
 //            return Backbone.Model.prototype.fetch.call(this, options);
@@ -26,7 +26,5 @@ define(['backbone', 'helpers'], function(Backbone, helpers) {
             };
         }
     });
-
-    return CurrentWeatherModel;
 });
 

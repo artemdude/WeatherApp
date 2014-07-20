@@ -2,8 +2,8 @@
  * Created by Superman on 7/19/2014.
  */
 
-define(['backbone', 'underscore'], function(Backbone, _) {
-    var CurrentWeatherView = Backbone.View.extend({
+define(['helpers', 'text!templates/currentWeatherTemplate.html'], function(helpers, template) {
+    return Backbone.View.extend({
         el: '#currentWeatherContainer',
         initialize: function () {
             this.model.fetch({
@@ -13,14 +13,16 @@ define(['backbone', 'underscore'], function(Backbone, _) {
                 data: { q: 'London', units: 'metric'} });
         },
         render: function () {
-            var that = this;
+            var model = this.model.attributes,
+                viewModel = $.extend({}, model, {
+                    iconCss: helpers.CssHelper.getCssClassByIcon(model.icon),
+                    currentTime: helpers.DateTimeHelper.getFullDateTime(),
+                    formattedSunrise: helpers.DateTimeHelper.getShortTime(model.sunrise),
+                    formattedSunset: helpers.DateTimeHelper.getShortTime(model.sunset)
+            });
 
-            //todo: load templates
-            that.$el.html('<div>aa</div>div>', that.model.toJSON());
-           // that.$el.html(_.template($('#currentWeatherTemplate').html(), that.model.toJSON()));
-            return that;
+            this.$el.html(_.template(template, viewModel));
+            return this;
         }
     });
-
-    return CurrentWeatherView;
 });
