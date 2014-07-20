@@ -1,0 +1,37 @@
+<script id="currentWeatherTemplate" type="text/template">
+    <h2>{{ city }}, {{ country }} <i class="weather-icon {{ getCssClassByIcon(icon) }}"></i> {{ temp }} °C</h2>
+    <div>{{ title }}</div>
+    <div>{{ DateTimeHelper.getFullDateTime() }}</div>
+    <table class="table table-bordered table-striped">
+        <colgroup>
+            <col class="col-xs-1">
+            <col class="col-xs-7">
+        </colgroup>
+        <tbody>
+        <tr>
+            <td>Wind</td>
+            <td>{{ windSpeed }} m/s</td>
+        </tr>
+        <tr>
+            <td>Cloudiness</td>
+            <td>{{ desc }}</td>
+        </tr>
+        <tr>
+            <td>Pressure</td>
+            <td>{{ pressure }} hpa</td>
+        </tr>
+        <tr>
+            <td>Humidity</td>
+            <td>{{ humidity }} %</td>
+        </tr>
+        <tr>
+            <td>Sunrise</td>
+            <td>{{ DateTimeHelper.getShortTime(sunrise) }}</td>
+        </tr>
+        <tr>
+            <td>Sunset</td>
+            <td>{{ DateTimeHelper.getShortTime(sunset) }}</td>
+        </tr>
+        </tbody>
+    </table>
+</script>
