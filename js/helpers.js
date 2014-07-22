@@ -14,6 +14,7 @@ define(['nv', 'd3', 'moment'], function(nv, d3, moment) {
     return {
         ApiUrlFabric: {
             hourly: 'http://api.openweathermap.org/data/2.5/forecast/hourly',
+            daily: 'http://api.openweathermap.org/data/2.5/forecast/daily',
             weather: 'http://api.openweathermap.org/data/2.5/weather'
         },
 
@@ -48,6 +49,15 @@ define(['nv', 'd3', 'moment'], function(nv, d3, moment) {
             },
             getFullDateTime: function (dateTime) {
                 return moment(dateTime).format('MMMM Do YYYY, h:mm:ss a')
+            },
+            getFullDate: function (dateTime) {
+                return moment(dateTime).format('dddd MMMM Do YYYY')
+            },
+            getFullDay: function (dateTime) {
+                return moment(dateTime).format('dddd')
+            },
+            getShortDate: function (dateTime) {
+                return moment(dateTime).format('MMMM Do')
             }
         },
 

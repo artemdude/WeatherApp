@@ -33,10 +33,10 @@ define(['helpers', 'text!templates/mainTabTemplate.html'], function(helpers, tem
         },
         getChartData: function () {
             var result = [],
-                list = this.model.get('list');
+                hours = this.model.get('hours');
 
             for (var i = 0; i < 11; i++) {
-                result.push({x: new Date(list[i].dt_txt), y: list[i].main.temp });
+                result.push({x: hours[i].date, y: hours[i].temp });
             }
 
             return [

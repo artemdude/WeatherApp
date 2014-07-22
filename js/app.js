@@ -4,10 +4,13 @@
 
 define(function(require){
     var parallax = require('parallax'),
-        CurrentWeatherModel = require('models/CurrentWeatherModel'),
-        HourlyWeatherModel = require('models/HourlyWeatherModel'),
+        CurrentWeatherModel = require('models/currentWeatherModel'),
+        HourlyWeatherModel = require('models/hourlyWeatherModel'),
+        DailyWeatherModel = require('models/dailyWeatherModel'),
         CurrentWeatherView = require('views/CurrentWeatherView'),
-        MainTabWeatherView = require('views/MainTabWeatherView');
+        MainTabWeatherView = require('views/mainTabWeatherView'),
+        HourlyTabWeatherView = require('views/tabs/hourlyWeatherView'),
+        DailyTabWeatherView = require('views/tabs/dailyWeatherView');
 
     $(function () {
         $('.clouds-bg').parallax({
@@ -31,6 +34,16 @@ define(function(require){
         $('a[href="#mainTab"]').on('shown.bs.tab', function (e) {
             var currentWeatherModel = new HourlyWeatherModel();
             new MainTabWeatherView({ model: currentWeatherModel });
+        })
+
+        $('a[href="#hourlyTab"]').on('shown.bs.tab', function (e) {
+            var currentWeatherModel = new HourlyWeatherModel();
+            new HourlyTabWeatherView({ model: currentWeatherModel });
+        })
+
+        $('a[href="#dailyTab"]').on('shown.bs.tab', function (e) {
+            var currentWeatherModel = new DailyWeatherModel();
+            new DailyTabWeatherView({ model: currentWeatherModel });
         })
     });
 });

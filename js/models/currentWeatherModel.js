@@ -20,8 +20,6 @@ define(['helpers'], function(helpers) {
                 humidity: response.main.humidity,
                 pressure: response.main.pressure,
                 temp: response.main.temp,
-                windDeg: response.wind.deg,
-                windGust: response.wind.gust,
                 windSpeed: response.wind.speed
             };
         }
