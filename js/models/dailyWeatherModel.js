@@ -2,10 +2,6 @@
  * Created by Superman on 7/22/2014.
  */
 
-/**
- * Created by Superman on 7/19/2014.
- */
-
 define(['helpers'], function (helpers) {
     return Backbone.Model.extend({
         url: helpers.ApiUrlFabric.daily,
@@ -28,8 +24,6 @@ define(['helpers'], function (helpers) {
                 country: response.city.country,
                 days: days
             };
-
-            console.log(this.attributes);
         }
     });
 });

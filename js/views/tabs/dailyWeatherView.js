@@ -2,10 +2,6 @@
  * Created by Superman on 7/22/2014.
  */
 
-/**
- * Created by Superman on 7/21/2014.
- */
-
 define(['helpers', 'text!templates/tabs/dailyWeatherTemplate.html'], function (helpers, template) {
     return Backbone.View.extend({
         el: '#dailyTab',

@@ -2,7 +2,7 @@
  * Created by Superman on 7/19/2014.
  */
 
-define(['../../helpers', 'text!templates/mainTabTemplate.html', 'text!templates/chartTemplate.html'], function(helpers, template, chartTemplate) {
+define(['../../helpers', 'text!templates/tabs/mainTabTemplate.html', 'text!templates/chartTemplate.html'], function(helpers, template, chartTemplate) {
     return Backbone.View.extend({
         el: '#mainTab',
         initialize: function () {

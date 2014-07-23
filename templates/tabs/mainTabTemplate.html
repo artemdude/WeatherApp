@@ -1,7 +1,7 @@
 <div class="hour-info">
 {[ _.each(hours, function(hour){ ]}
     <div class="hour-info-cell">
-        <div title="{{ hour.title }}"><i class="weather-icon {{ hour.iconCss }}"></i></div>
+        <div><i title="{{ hour.title }}" class="weather-icon {{ hour.iconCss }}"></i></div>
         <div title="Temperature">{{  hour.temp }}°C</div>
         <div title="Wind speed">{{ hour.windSpeed }}m/s</div>
         <div title="Pressure" class="pressure">{{ hour.pressure }}</div>
