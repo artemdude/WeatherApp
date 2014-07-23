@@ -29,10 +29,9 @@ define(['nv', 'd3', 'moment', 'text!templates/chartTooltipTemplate.html'], funct
                 nv.addGraph(function () {
                     var chart = nv.models.lineChart()
                         .options({
-                            margin: {left: 75, bottom: 50},
-                            transitionDuration: 250,
-                            showLegend: false
-                            //useInteractiveGuideline: true
+                            margin: {left: 20, bottom: 50, right: 80},
+                            showLegend: false,
+                            rightAlignYAxis: true
                         });
 
                     chart.xAxis.axisLabel(options.xLabel).tickFormat(options.xFormatter);

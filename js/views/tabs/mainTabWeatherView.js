@@ -2,7 +2,7 @@
  * Created by Superman on 7/19/2014.
  */
 
-define(['helpers', 'text!templates/mainTabTemplate.html'], function(helpers, template) {
+define(['../../helpers', 'text!templates/mainTabTemplate.html', 'text!templates/chartTemplate.html'], function(helpers, template, chartTemplate) {
     return Backbone.View.extend({
         el: '#mainTab',
         initialize: function () {
@@ -16,19 +16,19 @@ define(['helpers', 'text!templates/mainTabTemplate.html'], function(helpers, tem
         render: function () {
             var that = this;
 
-            that.$el.html(_.template(template, that.model.toJSON()));
+            that.$el.html(chartTemplate + _.template(template, { hours: _.first(that.model.get('hours'), 8) }));
             return that;
         },
         initChart: function () {
             var that = this;
 
             helpers.ChartHelper.drawLineChart({
-                xLabel: 'xxx',
-                yLabel: 'yyy',
-                svgId: 'mainTabChart',
+                yLabel: 'Weather',
+                elContainer: that.el.id,
                 dataFun: _.bind(that.getChartData, that),
                 yFormatter: helpers.ChartHelper.formatter.number,
-                xFormatter: helpers.ChartHelper.formatter.time
+                xFormatter: helpers.ChartHelper.formatter.time,
+                units: '°C'
             })
         },
         getChartData: function () {
@@ -39,13 +39,11 @@ define(['helpers', 'text!templates/mainTabTemplate.html'], function(helpers, tem
                 result.push({x: hours[i].date, y: hours[i].temp });
             }
 
-            return [
-                {
-                    values: result,
-                    key: "Temperature",
-                    color: "#2ca02c"
-                }
-            ];
+            return [{
+                values: result,
+                key: 'Temperature',
+                color: '#f0ad4e'
+            }];
         }
     });
 });

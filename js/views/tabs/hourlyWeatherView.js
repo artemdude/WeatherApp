@@ -26,7 +26,10 @@ define(['helpers', 'text!templates/tabs/hourlyWeatherTemplate.html'], function(h
                 newDay = item.date.getDay();
                 if(newDay !== day){
                     day = newDay;
-                    dayObj = { formattedDate: helpers.DateTimeHelper.getFullDate(item.date), hours: []};
+                    dayObj = {
+                        formattedDate: helpers.DateTimeHelper.getFullDate(item.date),
+                        hours: []
+                    };
                     dayObj.hours.push(item);
                     viewModel.days.push(dayObj);
                 }

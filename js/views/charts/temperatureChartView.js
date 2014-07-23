@@ -20,7 +20,7 @@ define(['helpers', 'text!templates/chartTemplate.html'], function(helpers, templ
         },
         render: function () {
             var that = this;
-            that.$el.html(_.template(template, that.model.toJSON()));
+            that.$el.html(template);
             return that;
         },
         initChart: function () {

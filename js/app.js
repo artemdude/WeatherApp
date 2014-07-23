@@ -8,7 +8,7 @@ define(function(require){
         HourlyWeatherModel = require('models/hourlyWeatherModel'),
         DailyWeatherModel = require('models/dailyWeatherModel'),
         CurrentWeatherView = require('views/CurrentWeatherView'),
-        MainTabWeatherView = require('views/mainTabWeatherView'),
+        MainTabWeatherView = require('views/tabs/mainTabWeatherView'),
         HourlyTabWeatherView = require('views/tabs/hourlyWeatherView'),
         DailyTabWeatherView = require('views/tabs/dailyWeatherView'),
         TemperatureChartView = require('views/charts/temperatureChartView'),
