@@ -2,7 +2,7 @@
  * Created by Superman on 7/19/2014.
  */
 
-define(['nv', 'd3', 'moment'], function(nv, d3, moment) {
+define(['nv', 'd3', 'moment', 'text!templates/chartTooltipTemplate.html'], function(nv, d3, moment, chartTooltipTemplate) {
 
     //make mustache
     _.templateSettings = {
@@ -29,14 +29,26 @@ define(['nv', 'd3', 'moment'], function(nv, d3, moment) {
                 nv.addGraph(function () {
                     var chart = nv.models.lineChart()
                         .options({
-                            margin: {left: 75, bottom: 50}
+                            margin: {left: 75, bottom: 50},
+                            transitionDuration: 250,
+                            showLegend: false
+                            //useInteractiveGuideline: true
                         });
 
                     chart.xAxis.axisLabel(options.xLabel).tickFormat(options.xFormatter);
-                    chart.yAxis.axisLabel(options.yLabel).tickFormat(options.yFormatter);
+                    chart.yAxis.axisLabel(options.yLabel + ' (' + options.units + ')').tickFormat(options.yFormatter);
 
-                    d3.select('#' + options.svgId).datum(options.dataFun).call(chart);
+                    d3.select('#' + options.elContainer + ' svg').datum(options.dataFun).call(chart);
                     nv.utils.windowResize(chart.update);
+
+                    chart.tooltipContent(function(key, y, e, graph) {
+                        return _.template(chartTooltipTemplate, {
+                             title: key,
+                             formattedTime: moment(graph.point.x).format('hh:mma'),
+                             units: options.units,
+                             data: e
+                         })
+                    });
 
                     return chart;
                 });
@@ -46,6 +58,9 @@ define(['nv', 'd3', 'moment'], function(nv, d3, moment) {
         DateTimeHelper: {
             getShortTime: function (time) {
                 return moment(time).format('hh:mm');
+            },
+            getTime: function (time) {
+                return moment(time).format('hh:mm a');
             },
             getFullDateTime: function (dateTime) {
                 return moment(dateTime).format('MMMM Do YYYY, h:mm:ss a')

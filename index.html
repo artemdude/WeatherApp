@@ -2,6 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <!--TODO: add description-->
     <title>Weather app</title>
     <link rel="stylesheet/less" type="text/css" href="less/style.less"/>
     <link href="css/nv.d3.css" rel="stylesheet" type="text/css">
@@ -45,10 +46,10 @@
                         Charts <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#settings" role="tab" data-toggle="tab">Temperature</a></li>
-                        <li><a href="#settings" role="tab" data-toggle="tab">Wind</a></li>
-                        <li><a href="#settings" role="tab" data-toggle="tab">Pressure</a></li>
-                        <li><a href="#settings" role="tab" data-toggle="tab">Precipitation</a></li>
+                        <li><a href="#temperatureChartTab" role="tab" data-toggle="tab">Temperature</a></li>
+                        <li><a href="#windChartTab" role="tab" data-toggle="tab">Wind</a></li>
+                        <li><a href="#pressureChartTab" role="tab" data-toggle="tab">Pressure</a></li>
+                        <li><a href="#humidityChartTab" role="tab" data-toggle="tab">Humidity</a></li>
                     </ul>
                 </li>
             </ul>
@@ -61,12 +62,20 @@
                 </div>
                 <div class="tab-pane" id="dailyTab">
                 </div>
+                <div class="tab-pane" id="temperatureChartTab">
+                </div>
+                <div class="tab-pane" id="windChartTab">
+                </div>
+                <div class="tab-pane" id="pressureChartTab">
+                </div>
+                <div class="tab-pane" id="humidityChartTab">
+                </div>
             </div>
         </div>
     </div>
 </content>
 <footer>
-    made with <a href="http://www.shkolovy.com">❤</a>
+    Made with <a href="http://www.shkolovy.com">❤</a> 2014
 </footer>
 </body>
 <script data-main="js/main" src="js/libs/require.js"></script>

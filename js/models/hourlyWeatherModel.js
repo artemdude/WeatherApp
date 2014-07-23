@@ -6,9 +6,10 @@ define(['helpers'], function (helpers) {
     return Backbone.Model.extend({
         url: helpers.ApiUrlFabric.hourly,
         parse: function (response) {
+            console.log(response.list[0]);
             var hours = _.map(response.list, function (item) {
                 return {
-                    date: new Date(item.dt_txt),
+                    date: moment.unix(item.dt).toDate(),
                     temp: item.main.temp,
                     desc: item.weather[0].description,
                     icon: item.weather[0].icon,

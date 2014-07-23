@@ -8,9 +8,9 @@
             <i class="weather-icon {{ day.iconCss }}"></i>
         </div>
         <div class="col-xs-8">
-             <span title="average" class="badge">{{ day.temp.eve }}°C</span>
-             <span title="max" class="badge">{{ day.temp.max }}°C</span>
-             <span title="min" class="badge">{{ day.temp.min }}°C</span>
+             <span title="average" class="label label-default">{{ day.temp.eve }}°C</span>
+             <span title="min" class="label label-info">{{ day.temp.min }}°C</span>
+             <span title="max" class="label label-danger">{{ day.temp.max }}°C</span>
              <span>{{ day.desc }}</span>
              <div>wind {{ day.windSpeed }}m/s humidity {{ day.humidity }}% pressure {{ day.pressure }}hpa</div>
         </div>
