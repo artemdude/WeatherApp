@@ -23,7 +23,7 @@ require.config({
     },
     shim: {
         app: {
-            deps: ['backbone', 'less', 'bootstrap']
+            deps: ['backbone', 'less', 'bootstrap', 'parallax']
         },
         backbone: {
             deps: ['jquery', 'underscore'],
@@ -41,6 +41,10 @@ require.config({
         nv: {
             deps: ['d3'],
             exports: 'nv'
+        },
+        parallax: {
+            deps: ['jquery'],
+            exports: 'parallax'
         }
     }
 });

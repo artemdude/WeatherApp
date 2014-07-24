@@ -3,20 +3,10 @@
  */
 
 define(function(require){
-    var parallax = require('parallax'),
-        CurrentWeatherModel = require('models/currentWeatherModel'),
-        HourlyWeatherModel = require('models/hourlyWeatherModel'),
-        DailyWeatherModel = require('models/dailyWeatherModel'),
-        CurrentWeatherView = require('views/CurrentWeatherView'),
-        MainTabWeatherView = require('views/tabs/mainTabWeatherView'),
-        HourlyTabWeatherView = require('views/tabs/hourlyWeatherView'),
-        DailyTabWeatherView = require('views/tabs/dailyWeatherView'),
-        TemperatureChartView = require('views/charts/temperatureChartView'),
-        WindChartView = require('views/charts/windChartView'),
-        PressureChartView = require('views/charts/pressureChartView'),
-        HumidityChartView = require('views/charts/humidityChartView');
-
+    //entry point
     $(function () {
+        var MainPageView = require('views/mainPageView');
+
         $('.clouds-bg').parallax({
             calibrateX: false,
             calibrateY: true,
@@ -32,42 +22,6 @@ define(function(require){
             originY: 0.0
         });
 
-        var currentWeatherModel = new CurrentWeatherModel();
-        new CurrentWeatherView({ model: currentWeatherModel });
-
-        $('a[href="#mainTab"]').on('shown.bs.tab', function (e) {
-            var currentWeatherModel = new HourlyWeatherModel();
-            new MainTabWeatherView({ model: currentWeatherModel });
-        })
-
-        $('a[href="#hourlyTab"]').on('shown.bs.tab', function (e) {
-            var currentWeatherModel = new HourlyWeatherModel();
-            new HourlyTabWeatherView({ model: currentWeatherModel });
-        })
-
-        $('a[href="#dailyTab"]').on('shown.bs.tab', function (e) {
-            var currentWeatherModel = new DailyWeatherModel();
-            new DailyTabWeatherView({ model: currentWeatherModel });
-        })
-
-        $('a[href="#temperatureChartTab"]').on('shown.bs.tab', function (e) {
-            var currentWeatherModel = new HourlyWeatherModel();
-            new TemperatureChartView({ model: currentWeatherModel });
-        })
-
-        $('a[href="#windChartTab"]').on('shown.bs.tab', function (e) {
-            var currentWeatherModel = new HourlyWeatherModel();
-            new WindChartView({ model: currentWeatherModel });
-        })
-
-        $('a[href="#pressureChartTab"]').on('shown.bs.tab', function (e) {
-            var currentWeatherModel = new HourlyWeatherModel();
-            new PressureChartView({ model: currentWeatherModel });
-        })
-
-        $('a[href="#humidityChartTab"]').on('shown.bs.tab', function (e) {
-            var currentWeatherModel = new HourlyWeatherModel();
-            new HumidityChartView({ model: currentWeatherModel });
-        })
+        new MainPageView();
     });
 });
