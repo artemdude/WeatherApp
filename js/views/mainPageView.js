@@ -31,7 +31,9 @@ define(function(require) {
             'shown.bs.tab a[href="#pressureChartTab"]' : 'renderPressureTab',
             'shown.bs.tab a[href="#humidityChartTab"]' : 'renderHumidityChartTabTab'
         },
-        initialize: function () {
+        initialize: function (options) {
+            this.params = options.params;
+            //console.log(this.model.get('location'));
             this.render();
             this.renderCurrentWeather();
             this.renderMainTab();
@@ -40,8 +42,14 @@ define(function(require) {
             this.$el.html(template);
             return this;
         },
+        getQueryParams: function(){
+            return {
+                q: this.params.location,
+                units: this.params.units
+            };
+        },
         renderCurrentWeather: function(){
-            new CurrentWeatherView({ model: new CurrentWeatherModel() });
+            new CurrentWeatherView({ params: this.getQueryParams(), model: new CurrentWeatherModel()});
         },
         renderMainTab: function(){
             new MainTabWeatherView({ model: new HourlyWeatherModel() });

@@ -15,7 +15,7 @@ http://locachejs.org/
 поиск по городам
 цельсии-фаренгейты переключатель
 урл http://stackoverflow.com/questions/7310230/backbone-routes-without-hashes
-структурировать файлы
+
 почистить проект
 
 тесты
