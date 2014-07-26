@@ -9,9 +9,6 @@ http://locachejs.org/
 
 http://gd.geobytes.com/AutoCompleteCity?q=Mosc
 
-
-- форматы вмемени
-
 написать тесты
 
 дорисовать все вьюшки

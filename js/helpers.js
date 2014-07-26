@@ -10,7 +10,7 @@ define(['nv', 'd3', 'moment', 'text!templates/chartTooltipTemplate.html'], funct
         interpolate: /\{\{([\s\S]+?)\}\}/g
     };
 
-    return {
+    var helpers = {
         ApiUrls: {
             hourly: 'http://api.openweathermap.org/data/2.5/forecast/hourly',
             daily: 'http://api.openweathermap.org/data/2.5/forecast/daily',
@@ -20,9 +20,9 @@ define(['nv', 'd3', 'moment', 'text!templates/chartTooltipTemplate.html'], funct
         ChartHelper: {
             formatter: {
                 time: function (date) {
-                    return d3.time.format("%H:%M")(new Date(date));
+                    return d3.time.format("%H:%M%")(new Date(date));
                 },
-                number: d3.format(',.1f')
+                number: d3.format(',.0f')
             },
             drawLineChart: function (options) {
                 nv.addGraph(function () {
@@ -42,7 +42,7 @@ define(['nv', 'd3', 'moment', 'text!templates/chartTooltipTemplate.html'], funct
                     chart.tooltipContent(function(key, y, e, graph) {
                         return _.template(chartTooltipTemplate, {
                              title: key,
-                             formattedTime: moment(graph.point.x).format('hh:mma'),
+                             formattedTime: helpers.DateTimeHelper.getShortTime(graph.point.x),
                              units: options.units,
                              data: e
                          })
@@ -55,10 +55,7 @@ define(['nv', 'd3', 'moment', 'text!templates/chartTooltipTemplate.html'], funct
 
         DateTimeHelper: {
             getShortTime: function (time) {
-                return moment(time).format('hh:mm');
-            },
-            getTime: function (time) {
-                return moment(time).format('hh:mm a');
+                return moment(time).format('hh:mma');
             },
             getFullDateTime: function (dateTime) {
                 return moment(dateTime).format('MMMM Do YYYY, h:mm:ss a')
@@ -99,6 +96,8 @@ define(['nv', 'd3', 'moment', 'text!templates/chartTooltipTemplate.html'], funct
             }
         }
     };
+
+    return helpers;
 });
 
 
