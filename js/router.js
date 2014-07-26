@@ -33,17 +33,27 @@ define(function(require){
             alert('about');
         },
         getCurrentLocation: function(callback){
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    callback({
-                        lat: position.coords.latitude,
-                        lon: position.coords.longitude,
-                        units: 'metric'
+            var location = $.cookie('location');
+
+            if(location){
+                callback($.parseJSON(location));
+            }
+            else{
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        location = {
+                            lat: position.coords.latitude,
+                            lon: position.coords.longitude,
+                            units: 'metric'
+                        };
+
+                        $.cookie('location', JSON.stringify(location));
+                        callback(location);
                     });
-                });
-            } else {
-                this.router.navigate('about', {trigger: true});
-                alert("Geolocation is not supported by this browser.");
+                } else {
+                    this.router.navigate('about', {trigger: true});
+                    alert("Geolocation is not supported by this browser.");
+                }
             }
         }
     });

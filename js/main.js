@@ -15,6 +15,7 @@ require.config({
         less: 'libs/less',
         bootstrap: 'libs/bootstrap',
         moment: 'libs/moment',
+        cookie: 'libs/jquery.cookie',
 
         templates: '../templates',
 
@@ -23,7 +24,7 @@ require.config({
     },
     shim: {
         app: {
-            deps: ['backbone', 'less', 'bootstrap', 'parallax']
+            deps: ['backbone', 'less', 'bootstrap', 'parallax', 'cookie']
         },
         backbone: {
             deps: ['jquery', 'underscore'],
@@ -45,6 +46,10 @@ require.config({
         parallax: {
             deps: ['jquery'],
             exports: 'parallax'
+        },
+        cookie: {
+            deps: ['jquery'],
+            exports: 'cookie'
         }
     }
 });
