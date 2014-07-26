@@ -12,6 +12,7 @@ define(['nv', 'd3', 'moment', 'text!templates/chartTooltipTemplate.html'], funct
 
     var helpers = {
         ApiUrls: {
+            location: 'http://gd.geobytes.com/AutoCompleteCity',
             hourly: 'http://api.openweathermap.org/data/2.5/forecast/hourly',
             daily: 'http://api.openweathermap.org/data/2.5/forecast/daily',
             weather: 'http://api.openweathermap.org/data/2.5/weather'

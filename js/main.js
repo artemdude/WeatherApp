@@ -15,7 +15,8 @@ require.config({
         less: 'libs/less',
         bootstrap: 'libs/bootstrap',
         moment: 'libs/moment',
-        cookie: 'libs/jquery.cookie',
+        cookie: 'libs/cookie',
+        typeahead: 'libs/typeahead',
 
         templates: '../templates',
 
@@ -24,7 +25,7 @@ require.config({
     },
     shim: {
         app: {
-            deps: ['backbone', 'less', 'bootstrap', 'parallax', 'cookie']
+            deps: ['backbone', 'less', 'bootstrap', 'parallax', 'cookie', 'typeahead']
         },
         backbone: {
             deps: ['jquery', 'underscore'],
@@ -46,6 +47,10 @@ require.config({
         parallax: {
             deps: ['jquery'],
             exports: 'parallax'
+        },
+        typeahead: {
+            deps: ['jquery'],
+            exports: 'typeahead'
         },
         cookie: {
             deps: ['jquery'],
