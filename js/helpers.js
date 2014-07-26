@@ -10,9 +10,8 @@ define(['nv', 'd3', 'moment', 'text!templates/chartTooltipTemplate.html'], funct
         interpolate: /\{\{([\s\S]+?)\}\}/g
     };
 
-//TODO: temp solution
     return {
-        ApiUrlFabric: {
+        ApiUrls: {
             hourly: 'http://api.openweathermap.org/data/2.5/forecast/hourly',
             daily: 'http://api.openweathermap.org/data/2.5/forecast/daily',
             weather: 'http://api.openweathermap.org/data/2.5/weather'

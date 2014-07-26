@@ -2,13 +2,13 @@
  * Created by Superman on 7/19/2014.
  */
 
-define(['helpers'], function(helpers) {
-    return Backbone.Model.extend({
-        url: helpers.ApiUrlFabric.weather,
-//        fetch: function(options){
-//            return Backbone.Model.prototype.fetch.call(this, options);
-//        },
-        parse: function(response){
+define(function(require) {
+    var helpers = require('helpers'),
+        baseModel = require('models/baseNestedModel');
+
+    return baseModel.extend({
+        url: helpers.ApiUrls.weather,
+        adapt: function(response){
             this.attributes = {
                 city: response.name,
                 country: response.sys.country,

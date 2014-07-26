@@ -8,7 +8,6 @@ define(function (require) {
 
     //entry point
     $(function () {
-        new Router();
-        new AppView();
+        new AppView({router: new Router()});
     });
 });

@@ -2,10 +2,13 @@
  * Created by Superman on 7/22/2014.
  */
 
-define(['helpers'], function (helpers) {
-    return Backbone.Model.extend({
-        url: helpers.ApiUrlFabric.daily,
-        parse: function (response) {
+define(function(require) {
+    var helpers = require('helpers'),
+        baseModel = require('models/baseNestedModel');
+
+    return baseModel.extend({
+        url: helpers.ApiUrls.daily,
+        adapt: function (response) {
             var days = _.map(response.list, function (item) {
                 return {
                     date: moment.unix(item.dt).toDate(),

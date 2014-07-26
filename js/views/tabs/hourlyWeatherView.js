@@ -2,16 +2,13 @@
  * Created by Superman on 7/21/2014.
  */
 
-define(['helpers', 'text!templates/tabs/hourlyWeatherTemplate.html'], function(helpers, template) {
-    return Backbone.View.extend({
+define(function(require) {
+    var helpers = require('helpers'),
+        template = require('text!templates/tabs/hourlyWeatherTemplate.html'),
+        baseView = require('views/baseNestedView');
+
+    return baseView.extend({
         el: '#hourlyTab',
-        initialize: function () {
-            this.model.fetch({
-                success: _.bind(function () {
-                    this.render();
-                }, this),
-                data: { q: 'London', units: 'metric'} });
-        },
         render: function () {
             var model = this.model.attributes,
                 viewModel = { days : []},

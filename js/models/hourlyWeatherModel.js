@@ -2,10 +2,13 @@
  * Created by Superman on 7/19/2014.
  */
 
-define(['helpers'], function (helpers) {
-    return Backbone.Model.extend({
-        url: helpers.ApiUrlFabric.hourly,
-        parse: function (response) {
+define(function(require) {
+    var helpers = require('helpers'),
+        baseModel = require('models/baseNestedModel');
+
+    return baseModel.extend({
+        url: helpers.ApiUrls.hourly,
+        adapt: function (response) {
             var hours = _.map(response.list, function (item) {
                 return {
                     date: moment.unix(item.dt).toDate(),

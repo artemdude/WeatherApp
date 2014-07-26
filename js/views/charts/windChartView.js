@@ -2,26 +2,16 @@
  * Created by Superman on 7/23/2014.
  */
 
-define(['helpers', 'text!templates/chartTemplate.html'], function(helpers, template) {
-    return Backbone.View.extend({
+define(function(require) {
+    var helpers = require('helpers'),
+        template = require('text!templates/chartTemplate.html'),
+        baseView = require('views/baseNestedView');
+
+    return baseView.extend({
         el: '#windChartTab',
-        initialize: function () {
-            this.fetchAndRender();
-        },
-        fetchAndRender: function(){
-            var that = this;
-            that.model.fetch({
-                success: function () {
-                    that.render();
-                    that.initChart();
-                },
-                data: { q: 'London', units: 'metric'}
-            });
-        },
         render: function () {
-            var that = this;
-            that.$el.html(template);
-            return that;
+            this.$el.html(template);
+            return this;
         },
         initChart: function () {
             var that = this;

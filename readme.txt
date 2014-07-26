@@ -7,6 +7,8 @@ jquery
 less
 http://locachejs.org/
 
+http://gd.geobytes.com/AutoCompleteCity?q=Mosc
+
 написать тесты
 
 здетаь лоадер на табы
@@ -14,11 +16,8 @@ http://locachejs.org/
 дорисовать все вьюшки
 поиск по городам
 цельсии-фаренгейты переключатель
-урл http://stackoverflow.com/questions/7310230/backbone-routes-without-hashes
 
 почистить проект
-
-тесты
 
 GRUNT сборщик
 

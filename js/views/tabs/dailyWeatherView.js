@@ -2,16 +2,13 @@
  * Created by Superman on 7/22/2014.
  */
 
-define(['helpers', 'text!templates/tabs/dailyWeatherTemplate.html'], function (helpers, template) {
-    return Backbone.View.extend({
+define(function(require) {
+    var helpers = require('helpers'),
+        template = require('text!templates/tabs/dailyWeatherTemplate.html'),
+        baseView = require('views/baseNestedView');
+
+    return baseView.extend({
         el: '#dailyTab',
-        initialize: function () {
-            this.model.fetch({
-                success: _.bind(function () {
-                    this.render();
-                }, this),
-                data: { q: 'London', units: 'metric'} });
-        },
         render: function () {
             var days = _.each(this.model.attributes.days, function (item) {
                 item.formattedDate = helpers.DateTimeHelper.getShortDate(item.date);

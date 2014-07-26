@@ -33,7 +33,6 @@ define(function(require) {
         },
         initialize: function (options) {
             this.params = options.params;
-            //console.log(this.model.get('location'));
             this.render();
             this.renderCurrentWeather();
             this.renderMainTab();
@@ -44,33 +43,59 @@ define(function(require) {
         },
         getQueryParams: function(){
             return {
-                q: this.params.location,
+                lat: this.params.lat,
+                lon: this.params.lon,
+                q: this.params.q,
                 units: this.params.units
             };
         },
         renderCurrentWeather: function(){
-            new CurrentWeatherView({ params: this.getQueryParams(), model: new CurrentWeatherModel()});
+            new CurrentWeatherView({
+                params: this.getQueryParams(),
+                model: new CurrentWeatherModel()
+            });
         },
         renderMainTab: function(){
-            new MainTabWeatherView({ model: new HourlyWeatherModel() });
+            new MainTabWeatherView({
+                params: this.getQueryParams(),
+                model: new HourlyWeatherModel()
+            });
         },
         renderHourlyTab: function(){
-            new HourlyTabWeatherView({ model: new HourlyWeatherModel() });
+            new HourlyTabWeatherView({
+                params: this.getQueryParams(),
+                model: new HourlyWeatherModel()
+            });
         },
         renderDailyTab: function(){
-            new DailyTabWeatherView({ model: new DailyWeatherModel() });
+            new DailyTabWeatherView({
+                params: this.getQueryParams(),
+                model: new DailyWeatherModel()
+            });
         },
         renderTemperatureTab: function(){
-            new TemperatureChartView({ model: new HourlyWeatherModel() });
+            new TemperatureChartView({
+                params: this.getQueryParams(),
+                model: new HourlyWeatherModel()
+            });
         },
         renderWindTab: function(){
-            new WindChartView({ model: new HourlyWeatherModel() });
+            new WindChartView({
+                params: this.getQueryParams(),
+                model: new HourlyWeatherModel()
+            });
         },
         renderPressureTab: function(){
-            new PressureChartView({ model: new HourlyWeatherModel() });
+            new PressureChartView({
+                params: this.getQueryParams(),
+                model: new HourlyWeatherModel()
+            });
         },
         renderHumidityChartTabTab: function(){
-            new HumidityChartView({ model: new HourlyWeatherModel() });
+            new HumidityChartView({
+                params: this.getQueryParams(),
+                model: new HourlyWeatherModel()
+            });
         }
     });
 });

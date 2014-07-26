@@ -3,72 +3,48 @@
  */
 
 define(function(require){
-    var AppModel = require('models/appModel'),
-        MainView = require('views/mainPageView');
+    var MainView = require('views/mainPageView');
 
     return Backbone.Router.extend({
         initialize: function(){
             Backbone.history.start();
         },
         routes: {
-            "":                     "mainPage",
-            ":location":            "mainPageWithLocation",
-            "about":                "aboutPage",
-            ":location/temperature":          "temperatureChartTab",
-            ":location/wind":                 "windChartTab",
-            ":location/pressure":             "pressureChartTab",
-            ":location/humidity":             "humidityChartTab"
+            "":                             "mainPage",
+            "about":                        "aboutPage",
+            ":location":                    "mainPageWithLocation",
+            ":location/temperature":        "temperatureChartTab",
+            ":location/wind":               "windChartTab",
+            ":location/pressure":           "pressureChartTab",
+            ":location/humidity":           "humidityChartTab"
         },
-//        getMainView: function(){
-//            if(!this.mainView){
-//                this.mainView = new MainView();
-//            }
-//
-//            return this.mainView;
-//        },
         mainPage: function() {
-            new MainView({params: {
-                location: 'Kiev',
-                units: 'metric'
-            }});
+            this.getCurrentLocation(function(params){
+                new MainView({params: params});
+            });
         },
         mainPageWithLocation: function(location){
             new MainView({params: {
-                location: location,
+                q: location,
                 units: 'metric'
             }});
         },
         aboutPage: function(){
             alert('about');
+        },
+        getCurrentLocation: function(callback){
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    callback({
+                        lat: position.coords.latitude,
+                        lon: position.coords.longitude,
+                        units: 'metric'
+                    });
+                });
+            } else {
+                this.router.navigate('about', {trigger: true});
+                alert("Geolocation is not supported by this browser.");
+            }
         }
-//        mainTab: function(location) {
-//            this.getMainView();
-//            $('a[href="#mainTab"]').tab('show')
-//        },
-//        hourlyTab: function(location){
-//            this.getMainView();
-//            $('a[href="#hourlyTab"]').tab('show')
-//        },
-//        dailyTab: function(location){
-//            alert(location);
-//            this.getMainView();
-//            $('a[href="#dailyTab"]').tab('show')
-//        },
-//        temperatureChartTab: function(location){
-//            this.getMainView();
-//            $('a[href="#temperatureChartTab"]').tab('show')
-//        },
-//        windChartTab: function(location){
-//            this.getMainView();
-//            $('a[href="#windChartTab"]').tab('show')
-//        },
-//        pressureChartTab: function(location){
-//            this.getMainView();
-//            $('a[href="#pressureChartTab"]').tab('show')
-//        },
-//        humidityChartTab: function(location){
-//            this.getMainView();
-//            $('a[href="#humidityChartTab"]').tab('show')
-//        }
     });
 })

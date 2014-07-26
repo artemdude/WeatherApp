@@ -2,16 +2,9 @@
  * Created by Superman on 7/19/2014.
  */
 
-define(['helpers', 'text!templates/currentWeatherTemplate.html'], function(helpers, template) {
-    return Backbone.View.extend({
+define(['helpers', 'text!templates/currentWeatherTemplate.html', 'views/baseNestedView'], function(helpers, template, baseView) {
+    return baseView.extend({
         el: '#currentWeatherContainer',
-        initialize: function () {
-            this.model.fetch({
-                success: _.bind(function () {
-                    this.render();
-                }, this),
-                data: { q: 'London', units: 'metric'} });
-        },
         render: function () {
             var model = this.model.attributes,
                 viewModel = $.extend({}, model, {

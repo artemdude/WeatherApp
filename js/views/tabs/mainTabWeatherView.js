@@ -2,17 +2,14 @@
  * Created by Superman on 7/19/2014.
  */
 
-define(['../../helpers', 'text!templates/tabs/mainTabTemplate.html', 'text!templates/chartTemplate.html'], function(helpers, template, chartTemplate) {
-    return Backbone.View.extend({
+define(function(require) {
+    var helpers = require('helpers'),
+        template = require('text!templates/tabs/mainTabTemplate.html'),
+        chartTemplate = require('text!templates/chartTemplate.html'),
+        baseView = require('views/baseNestedView');
+
+    return baseView.extend({
         el: '#mainTab',
-        initialize: function () {
-            this.model.fetch({
-                success: _.bind(function () {
-                    this.render();
-                    this.initChart();
-                }, this),
-                data: { q: 'London', units: 'metric'} });
-        },
         render: function () {
             var that = this;
 

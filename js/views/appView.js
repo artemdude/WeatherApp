@@ -4,11 +4,14 @@
 
 define(function(require) {
     return Backbone.View.extend({
+        el: 'body',
         ENTER_KEY_CODE: 13,
         events: {
             "keyup #searchField" : "search"
         },
-        initialize: function () {
+        initialize: function (options) {
+            this.router = options.router;
+
             $('.clouds-bg').parallax({
                 calibrateX: false,
                 calibrateY: true,
@@ -25,8 +28,11 @@ define(function(require) {
             });
         },
         search: function(e){
-            if(e.keyCode == this.ENTER_KEY_CODE){
-                alert('search');
+            var $searchField = $('#searchField');
+
+            if(e.keyCode == this.ENTER_KEY_CODE && $searchField.val()){
+                this.router.navigate($searchField.val(), {trigger: true});
+                $searchField.val('');
             }
         }
     });
