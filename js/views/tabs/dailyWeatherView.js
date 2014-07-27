@@ -10,7 +10,10 @@ define(function(require) {
     return baseView.extend({
         el: '#dailyTab',
         render: function () {
-            var days = _.each(this.model.attributes.days, function (item) {
+            var viewModel,
+                days;
+
+            days = _.each(this.model.attributes.days, function (item) {
                 item.formattedDate = helpers.DateTimeHelper.getShortDate(item.date);
                 item.formattedDay = helpers.DateTimeHelper.getFullDay(item.date);
                 item.iconCss = helpers.CssHelper.getCssClassByIcon(item.icon);
@@ -18,7 +21,12 @@ define(function(require) {
                 return item;
             });
 
-            this.$el.html(_.template(template, {days: days}));
+            viewModel = {
+                units : helpers.Units.getCurrentFormattedUnits(),
+                days: days
+            }
+            
+            this.$el.html(_.template(template, viewModel));
             return this;
         }
     });

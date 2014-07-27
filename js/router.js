@@ -3,7 +3,8 @@
  */
 
 define(function(require){
-    var MainView = require('views/mainPageView');
+    var helpers = require('helpers'),
+        MainView = require('views/mainPageView');
 
     return Backbone.Router.extend({
         initialize: function(){
@@ -19,21 +20,35 @@ define(function(require){
             ":location/humidity":           "humidityChartTab"
         },
         mainPage: function() {
+            var units = this.getUnits();
+
             this.getCurrentLocation(function(params){
-                new MainView({params: params});
+                new MainView({params: _.extend(params, { units : units })});
             });
         },
         mainPageWithLocation: function(location){
+            var units = this.getUnits();
+
             new MainView({params: {
                 q: location,
-                units: 'metric'
+                units : units
             }});
         },
         aboutPage: function(){
             alert('about');
         },
+        getUnits: function(){
+            var units = helpers.LocalCache.getUnits();
+
+            if(!units){
+                helpers.LocalCache.setUnits(helpers.Units.type.celsius);
+                return helpers.Units.type.celsius;
+            }
+
+            return units;
+        },
         getCurrentLocation: function(callback){
-            var location = $.cookie('location');
+            var location = helpers.LocalCache.getLocation();
 
             if(location){
                 callback($.parseJSON(location));
@@ -43,11 +58,10 @@ define(function(require){
                     navigator.geolocation.getCurrentPosition(function(position) {
                         location = {
                             lat: position.coords.latitude,
-                            lon: position.coords.longitude,
-                            units: 'metric'
+                            lon: position.coords.longitude
                         };
 
-                        $.cookie('location', JSON.stringify(location));
+                        helpers.LocalCache.setLocation(JSON.stringify(location));
                         callback(location);
                     });
                 } else {

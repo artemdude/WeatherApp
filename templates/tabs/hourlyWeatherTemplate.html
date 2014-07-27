@@ -12,7 +12,7 @@
                 <i title="{{ hour.title }}" class="weather-icon {{ hour.iconCss }}"></i>
             </div>
             <div class="col-xs-8">
-                 <span class="badge">{{  hour.temp }}°C</span>
+                 <span class="badge">{{  hour.temp }}{{ units }}</span>
                  <span>{{ hour.desc }}</span>
                  <div>{{ hour.windSpeed }}m/s {{ hour.humidity }}% {{ hour.pressure }}hpa</div>
             </div>

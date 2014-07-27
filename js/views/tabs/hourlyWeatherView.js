@@ -16,6 +16,8 @@ define(function(require) {
                 day,
                 newDay;
 
+            viewModel.units = helpers.Units.getCurrentFormattedUnits();
+
             _.each(model.hours, function(item){
                 item.formattedTime = helpers.DateTimeHelper.getShortTime(item.date);
                 item.iconCss = helpers.CssHelper.getCssClassByIcon(item.icon);

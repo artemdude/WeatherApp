@@ -11,11 +11,44 @@ define(['nv', 'd3', 'moment', 'text!templates/chartTooltipTemplate.html'], funct
     };
 
     var helpers = {
+        LocalCache: {
+            getUnits: function () {
+                return $.cookie('units');
+            },
+            setUnits: function(val){
+                $.cookie('units', val);
+            },
+            getLocation: function () {
+                return $.cookie('location');
+            },
+            setLocation: function(val){
+                $.cookie('location', val);
+            }
+        },
+
         ApiUrls: {
             location: 'http://gd.geobytes.com/AutoCompleteCity',
             hourly: 'http://api.openweathermap.org/data/2.5/forecast/hourly',
             daily: 'http://api.openweathermap.org/data/2.5/forecast/daily',
             weather: 'http://api.openweathermap.org/data/2.5/weather'
+        },
+
+        Units: {
+            type: {
+                celsius: 'metric',
+                fahrenheit: 'imperial'
+            },
+            text: {
+                celsius: '°C',
+                fahrenheit: '°F'
+            },
+            getCurrentFormattedUnits: function(){
+                if(helpers.LocalCache.getUnits() === helpers.Units.type.fahrenheit){
+                    return helpers.Units.text.fahrenheit;
+                }
+
+                return helpers.Units.text.celsius;
+            }
         },
 
         ChartHelper: {

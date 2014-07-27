@@ -2,12 +2,17 @@
  * Created by Superman on 7/19/2014.
  */
 
-define(['helpers', 'text!templates/currentWeatherTemplate.html', 'views/baseNestedView'], function(helpers, template, baseView) {
+define(function(require) {
+    var helpers = require('helpers'),
+        template = require('text!templates/currentWeatherTemplate.html'),
+        baseView = require('views/baseNestedView');
+
     return baseView.extend({
         el: '#currentWeatherContainer',
         render: function () {
             var model = this.model.attributes,
                 viewModel = $.extend({}, model, {
+                    units: helpers.Units.getCurrentFormattedUnits(),
                     iconCss: helpers.CssHelper.getCssClassByIcon(model.icon),
                     currentTime: helpers.DateTimeHelper.getFullDateTime(),
                     formattedSunrise: helpers.DateTimeHelper.getShortTime(model.sunrise),

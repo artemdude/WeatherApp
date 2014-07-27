@@ -22,7 +22,7 @@ define(function(require) {
                 dataFun: _.bind(that.getChartData, that),
                 yFormatter: helpers.ChartHelper.formatter.number,
                 xFormatter: helpers.ChartHelper.formatter.time,
-                units: '°C'
+                units: helpers.Units.getCurrentFormattedUnits()
             })
         },
         getChartData: function () {

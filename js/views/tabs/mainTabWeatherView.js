@@ -9,11 +9,16 @@ define(function(require) {
         baseView = require('views/baseNestedView');
 
     return baseView.extend({
+        ITEMS_COUNT: 8,
         el: '#mainTab',
         render: function () {
-            var that = this;
+            var that = this,
+                viewModel = {
+                    hours: _.first(that.model.get('hours'), that.ITEMS_COUNT),
+                    units: helpers.Units.getCurrentFormattedUnits()
+                };
 
-            that.$el.html(chartTemplate + _.template(template, { hours: _.first(that.model.get('hours'), 8) }));
+            that.$el.html(chartTemplate + _.template(template, viewModel));
             return that;
         },
         initChart: function () {
@@ -25,7 +30,7 @@ define(function(require) {
                 dataFun: _.bind(that.getChartData, that),
                 yFormatter: helpers.ChartHelper.formatter.number,
                 xFormatter: helpers.ChartHelper.formatter.time,
-                units: '°C'
+                units: helpers.Units.getCurrentFormattedUnits()
             })
         },
         getChartData: function () {
