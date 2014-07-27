@@ -9,11 +9,9 @@ moment.js
 parallax.js
 typeahead.js
 
-http://locachejs.org/
 
 написать тесты
 
 дорисовать все вьюшки (about при нажатии на логотип)
 
-почистить проект
 GRUNT сборщик

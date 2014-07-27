@@ -4,7 +4,8 @@
 
 define(function(require){
     var helpers = require('helpers'),
-        MainView = require('views/mainPageView');
+        MainView = require('views/mainPageView'),
+        AboutView = require('views/aboutPageView');
 
     return Backbone.Router.extend({
         initialize: function(){
@@ -35,7 +36,7 @@ define(function(require){
             }});
         },
         aboutPage: function(){
-            alert('about');
+            new AboutView();
         },
         getUnits: function(){
             var units = helpers.LocalCache.getUnits();

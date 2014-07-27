@@ -37,7 +37,7 @@ define(['helpers'], function (helpers) {
             var that = this;
 
             $("#searchField").typeahead({
-                delay: 500,
+                delay: 400,
                 minLength: 3,
                 source: function (query, process) {
                     $.ajax({
