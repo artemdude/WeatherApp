@@ -14,12 +14,10 @@ define(function(require) {
             return this;
         },
         initChart: function () {
-            var that = this;
-
             helpers.ChartHelper.drawLineChart({
                 yLabel: 'Wind',
-                elContainer: that.el.id,
-                dataFun: _.bind(that.getChartData, that),
+                elContainer: this.el.id,
+                dataFun: this.getChartData,
                 yFormatter: helpers.ChartHelper.formatter.number,
                 xFormatter: helpers.ChartHelper.formatter.time,
                 units: 'm/s'

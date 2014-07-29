@@ -11,23 +11,23 @@ define(function(require) {
     return baseView.extend({
         ITEMS_COUNT: 8,
         el: '#mainTab',
+        init: function(){
+            _.bindAll(this, 'getChartData');
+        },
         render: function () {
-            var that = this,
-                viewModel = {
-                    hours: _.first(that.model.get('hours'), that.ITEMS_COUNT),
-                    units: helpers.Units.getCurrentFormattedUnits()
-                };
+            var viewModel = {
+                hours: _.first(this.model.get('hours'), this.ITEMS_COUNT),
+                units: helpers.Units.getCurrentFormattedUnits()
+            };
 
-            that.$el.html(chartTemplate + _.template(template, viewModel));
-            return that;
+            this.$el.html(chartTemplate + _.template(template, viewModel));
+            return this;
         },
         initChart: function () {
-            var that = this;
-
             helpers.ChartHelper.drawLineChart({
                 yLabel: 'Weather',
-                elContainer: that.el.id,
-                dataFun: _.bind(that.getChartData, that),
+                elContainer: this.el.id,
+                dataFun: this.getChartData,
                 yFormatter: helpers.ChartHelper.formatter.number,
                 xFormatter: helpers.ChartHelper.formatter.time,
                 units: helpers.Units.getCurrentFormattedUnits()

@@ -11,6 +11,8 @@ define(['helpers'], function (helpers) {
             'click #unitsSwitcher': 'switchUnits'
         },
         initialize: function (options) {
+            _.bindAll(this, 'getAutocompleteData');
+
             this.router = options.router;
 
             this.initParallax();
@@ -34,21 +36,20 @@ define(['helpers'], function (helpers) {
             });
         },
         initAutocomplete: function () {
-            var that = this;
-
             $("#searchField").typeahead({
                 delay: 400,
                 minLength: 3,
-                source: function (query, process) {
-                    $.ajax({
-                        url: helpers.ApiUrls.location,
-                        dataType: "jsonp",
-                        data: { q: query },
-                        success: function (response) {
-                            process(that.parseAutocompleteData(response));
-                        }
-                    });
-                }
+                source: this.getAutocompleteData
+            });
+        },
+        getAutocompleteData: function(query, process) {
+            $.ajax({
+                url: helpers.ApiUrls.location,
+                dataType: "jsonp",
+                data: { q: query },
+                success: function (response) {
+                    process(this.parseAutocompleteData(response));
+                }.bind(this)
             });
         },
         parseAutocompleteData: function (data) {
@@ -59,9 +60,6 @@ define(['helpers'], function (helpers) {
             return _.uniq(items);
         },
         search: function (e) {
-
-            console.log(this.router);
-
             var $input = $(e.currentTarget);
 
             if (e.keyCode == this.ENTER_KEY_CODE && $input.val()) {

@@ -9,29 +9,34 @@ define(function(require) {
 
     return Backbone.View.extend({
         initialize: function (options) {
-            var that = this;
+            _.bindAll(this, 'baseRender', 'showLoading', 'showError', 'initChart', 'getChartData');
+
+            this.init();
             this.params = options.params;
             this.model.fetch({
-                success: _.bind(that.baseRender, that),
-                beforeSend: function () {
-                    that.$el.html(loadingTemplate);
-                },
-                error: function () {
-                    that.$el.html(someErrorTemplate);
-                },
-                data: options.params });
+                success: this.baseRender,
+                beforeSend: this.showLoading,
+                error: this.showError,
+                data: options.params
+            });
         },
         baseRender: function(){
-            var that = this;
             if(!this.model.attributes.error){
                 this.render();
-                if(this.initChart){
-                    this.initChart();
-                }
+                this.initChart();
             }
             else{
-                this.$el.html(_.template(notFoundErrorTemplate, { location: that.params.q }));
+                this.$el.html(_.template(notFoundErrorTemplate, { location: this.params.q }));
             }
-        }
+        },
+        showLoading: function(){
+            this.$el.html(loadingTemplate);
+        },
+        showError: function(){
+            this.$el.html(someErrorTemplate);
+        },
+        getChartData: function(){},
+        initChart: function(){},
+        init: function(){}
     });
 });
