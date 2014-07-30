@@ -20,10 +20,9 @@ define(function(require) {
         helpers = 'helpers';
 
     return Backbone.View.extend({
-        el: '#pageContainer',
         events: {
             'shown.bs.tab a[href="#mainTab"]' : 'renderMainTab',
-            'shown.bs.tab a[href="#hourlyTab"]' : 'renderHourlyTab',
+            'shown.bs.tab a[href="#hourlyTab"]' : 'displayHourlyTab',
             'shown.bs.tab a[href="#dailyTab"]' : 'renderDailyTab',
 
             'shown.bs.tab a[href="#temperatureChartTab"]' : 'renderTemperatureTab',
@@ -34,11 +33,11 @@ define(function(require) {
         initialize: function (options) {
             this.params = options.params;
             this.render();
-            this.renderCurrentWeather();
-            this.renderMainTab();
         },
         render: function () {
             this.$el.html(template);
+            this.renderCurrentWeather();
+            this.renderMainTab();
             return this;
         },
         getQueryParams: function(){
@@ -50,52 +49,103 @@ define(function(require) {
             };
         },
         renderCurrentWeather: function(){
-            new CurrentWeatherView({
+            var view = new CurrentWeatherView({
                 params: this.getQueryParams(),
                 model: new CurrentWeatherModel()
             });
+
+            this.$el.find('#currentWeatherContainer').html(view.el);
         },
         renderMainTab: function(){
-            new MainTabWeatherView({
-                params: this.getQueryParams(),
-                model: new HourlyWeatherModel()
-            });
+            var $container = this.$el.find('#mainTab'),
+                view;
+
+            if($container.is(':empty')) {
+                view = new MainTabWeatherView({
+                    params: this.getQueryParams(),
+                    model: new HourlyWeatherModel()
+                });
+
+                $container.html(view.el);
+            }
         },
-        renderHourlyTab: function(){
-            new HourlyTabWeatherView({
-                params: this.getQueryParams(),
-                model: new HourlyWeatherModel()
-            });
+        displayHourlyTab: function(){
+            var $container = this.$el.find('#hourlyTab'),
+                view;
+
+            if($container.is(':empty')){
+                view = new HourlyTabWeatherView({
+                    params: this.getQueryParams(),
+                    model: new HourlyWeatherModel()
+                });
+
+                $container.html(view.el);
+            }
         },
         renderDailyTab: function(){
-            new DailyTabWeatherView({
-                params: this.getQueryParams(),
-                model: new DailyWeatherModel()
-            });
+            var $container = this.$el.find('#dailyTab'),
+                view;
+
+            if($container.is(':empty')) {
+                view = new DailyTabWeatherView({
+                    params: this.getQueryParams(),
+                    model: new DailyWeatherModel()
+                });
+
+                $container.html(view.el);
+            }
         },
         renderTemperatureTab: function(){
-            new TemperatureChartView({
-                params: this.getQueryParams(),
-                model: new HourlyWeatherModel()
-            });
+            var $container = this.$el.find('#temperatureChartTab'),
+                view;
+
+            if($container.is(':empty')) {
+                view = new TemperatureChartView({
+                    params: this.getQueryParams(),
+                    model: new HourlyWeatherModel()
+                });
+
+                $container.html(view.el);
+            }
         },
         renderWindTab: function(){
-            new WindChartView({
-                params: this.getQueryParams(),
-                model: new HourlyWeatherModel()
-            });
+            var $container = this.$el.find('#windChartTab'),
+                view;
+
+            if($container.is(':empty')) {
+                view = new WindChartView({
+                    params: this.getQueryParams(),
+                    model: new HourlyWeatherModel()
+                });
+
+                $container.html(view.el);
+            }
         },
         renderPressureTab: function(){
-            new PressureChartView({
-                params: this.getQueryParams(),
-                model: new HourlyWeatherModel()
-            });
+            var $container = this.$el.find('#pressureChartTab'),
+                view;
+
+            if($container.is(':empty')) {
+                view = new PressureChartView({
+                    params: this.getQueryParams(),
+                    model: new HourlyWeatherModel()
+                });
+
+                $container.html(view.el);
+            }
         },
         renderHumidityChartTabTab: function(){
-            new HumidityChartView({
-                params: this.getQueryParams(),
-                model: new HourlyWeatherModel()
-            });
+            var $container = this.$el.find('#humidityChartTab'),
+                view;
+
+            if($container.is(':empty')) {
+                view = new HumidityChartView({
+                    params: this.getQueryParams(),
+                    model: new HourlyWeatherModel()
+                });
+
+                $container.html(view.el);
+            }
         }
     });
 });

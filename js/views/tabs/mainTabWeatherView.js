@@ -10,7 +10,6 @@ define(function(require) {
 
     return baseView.extend({
         ITEMS_COUNT: 8,
-        el: '#mainTab',
         init: function(){
             _.bindAll(this, 'getChartData');
         },
@@ -25,8 +24,8 @@ define(function(require) {
         },
         initChart: function () {
             helpers.ChartHelper.drawLineChart({
-                yLabel: 'Weather',
-                elContainer: this.el.id,
+                yLabel: 'Temperature',
+                elContainer: this.getContainerId(),
                 dataFun: this.getChartData,
                 yFormatter: helpers.ChartHelper.formatter.number,
                 xFormatter: helpers.ChartHelper.formatter.time,

@@ -8,7 +8,7 @@ define(function(require) {
         baseView = require('views/baseNestedView');
 
     return baseView.extend({
-        el: '#currentWeatherContainer',
+        //el: '#currentWeatherContainer',
         render: function () {
             var model = this.model.attributes,
                 viewModel = $.extend({}, model, {

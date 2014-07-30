@@ -8,7 +8,6 @@ define(function(require) {
         baseView = require('views/baseNestedView');
 
     return baseView.extend({
-        el: '#dailyTab',
         render: function () {
             var viewModel,
                 days;

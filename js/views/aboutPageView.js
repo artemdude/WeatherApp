@@ -6,7 +6,6 @@ define(function(require) {
     var template = require('text!templates/aboutPageTemplate.html');
 
     return Backbone.View.extend({
-        el: '#pageContainer',
         initialize: function () {
             this.render();
         },

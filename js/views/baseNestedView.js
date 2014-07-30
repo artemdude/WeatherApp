@@ -35,6 +35,9 @@ define(function(require) {
         showError: function(){
             this.$el.html(someErrorTemplate);
         },
+        getContainerId: function(){
+            return this.$el.parent().attr('id');
+        },
         getChartData: function(){},
         initChart: function(){},
         init: function(){}

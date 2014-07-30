@@ -8,7 +8,6 @@ define(function(require) {
         baseView = require('views/baseNestedView');
 
     return baseView.extend({
-        el: '#hourlyTab',
         render: function () {
             var model = this.model.attributes,
                 viewModel = { days : []},

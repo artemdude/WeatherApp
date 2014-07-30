@@ -21,22 +21,29 @@ define(function(require){
             ":location/humidity":           "humidityChartTab"
         },
         mainPage: function() {
-            var units = this.getUnits();
+            var view,
+                units = this.getUnits();
 
-            this.getCurrentLocation(function(params){
-                new MainView({params: _.extend(params, { units : units })});
+            this.getCurrentLocation(function(location){
+                view = new MainView({
+                    params: _.extend(location, { units: units })
+                });
+
+                $('#pageContainer').html(view.el);
             });
         },
         mainPageWithLocation: function(location){
-            var units = this.getUnits();
-
-            new MainView({params: {
+            var view = new MainView({params: {
                 q: location,
-                units : units
+                units : this.getUnits()
             }});
+
+            $('#pageContainer').html(view.el);
         },
         aboutPage: function(){
-            new AboutView();
+            var view = new AboutView();
+
+            $('#pageContainer').html(view.el);
         },
         getUnits: function(){
             var units = helpers.LocalCache.getUnits();

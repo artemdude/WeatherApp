@@ -8,7 +8,6 @@ define(function(require) {
         baseView = require('views/baseNestedView');
 
     return baseView.extend({
-        el: '#pressureChartTab',
         render: function () {
             this.$el.html(template);
             return this;
@@ -16,7 +15,7 @@ define(function(require) {
         initChart: function () {
             helpers.ChartHelper.drawLineChart({
                 yLabel: 'Pressure',
-                elContainer: this.el.id,
+                elContainer: this.getContainerId(),
                 dataFun: this.getChartData,
                 yFormatter: helpers.ChartHelper.formatter.number,
                 xFormatter: helpers.ChartHelper.formatter.time,
