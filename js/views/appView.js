@@ -17,7 +17,7 @@ define(['helpers'], function (helpers) {
 
             this.initParallax();
             this.initAutocomplete();
-            this.initUnitsSwitcher();
+            this.changeUnitsSwitcher();
         },
         initParallax: function () {
             $('.clouds-bg').parallax({
@@ -36,13 +36,13 @@ define(['helpers'], function (helpers) {
             });
         },
         initAutocomplete: function () {
-            $("#searchField").typeahead({
+            this.$el.find("#searchField").typeahead({
                 delay: 400,
                 minLength: 3,
                 source: this.getAutocompleteData
             });
         },
-        getAutocompleteData: function(query, process) {
+        getAutocompleteData: function (query, process) {
             $.ajax({
                 url: helpers.ApiUrls.location,
                 dataType: "jsonp",
@@ -67,29 +67,17 @@ define(['helpers'], function (helpers) {
                 this.router.mainPageWithLocation($input.val());
             }
         },
-        initUnitsSwitcher: function(){
-            var units = helpers.LocalCache.getUnits(),
-                $switcher = $('#unitsSwitcher');
-
-            if(units === helpers.Units.type.celsius){
-                $switcher.html(helpers.Units.text.celsius);
-            }
-            else{
-                $switcher.html(helpers.Units.text.fahrenheit);
-            }
+        changeUnitsSwitcher: function () {
+            this.$el.find('#unitsSwitcher').html(helpers.Units.getCurrentFormattedUnits());
         },
-        switchUnits: function (e) {
+        switchUnits: function () {
             var units = helpers.LocalCache.getUnits(),
-                $switcher = $(e.currentTarget);
+                unitsToChange = units === helpers.Units.type.celsius ?
+                    helpers.Units.type.fahrenheit : helpers.Units.type.celsius;
 
-            if(units === helpers.Units.type.celsius){
-                helpers.LocalCache.setUnits(helpers.Units.type.fahrenheit);
-                $switcher.html(helpers.Units.text.fahrenheit);
-            }
-            else{
-                helpers.LocalCache.setUnits(helpers.Units.type.celsius);
-                $switcher.html(helpers.Units.text.celsius);
-            }
+            helpers.LocalCache.setUnits(unitsToChange);
+
+            this.changeUnitsSwitcher();
         }
     });
 });

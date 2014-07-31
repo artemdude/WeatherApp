@@ -9,11 +9,7 @@ moment.js
 parallax.js
 typeahead.js
 
-цельсии через listento
-кешировать сабввьюшки
-баги с вьюшками
 написать тесты
-прекомпелированные темплейты
-about
+about readme
 
 GRUNT сборщик
