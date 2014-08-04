@@ -1,0 +1,14 @@
+{
+    "name": "WeatherApp",
+    "version": "0.1.0",
+    "description": "Compile LESS files to CSS.",
+    "homepage": "https://github.com/artemdude/weather-app",
+    "author": {
+        "name": "Artem Shkolovy",
+        "url": "http://www.shkolovy.com"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.5",
+        "grunt-contrib-less": "0.11.4"
+    }
+}
