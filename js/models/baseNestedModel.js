@@ -14,6 +14,7 @@ define(function() {
             else{
                 this.adapt(response);
             }
-        }
+        },
+        adapt: function(){}
     });
 });

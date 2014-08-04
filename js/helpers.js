@@ -2,7 +2,11 @@
  * Created by Superman on 7/19/2014.
  */
 
-define(['nv', 'd3', 'moment', 'text!templates/chartTooltipTemplate.html'], function(nv, d3, moment, chartTooltipTemplate) {
+define(function(require){
+    var nv = require('nv'),
+        d3 = require('d3'),
+        moment = require('moment'),
+        chartTooltipTemplate = require('text!templates/chartTooltipTemplate.html');
 
     //make mustache
     _.templateSettings = {
