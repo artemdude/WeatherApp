@@ -25,4 +25,4 @@ You can see the demo <a href="http://code.shkolovy.com/code/ui/weather-app/">her
 
 ### Used APIs:
 * [gd.geobytes.com](http://gd.geobytes.com/AutoCompleteCity/) - location autocomplete
-* [api.openweathermap.org](http://api.openweathermap.org/) - weather data
+* [api.openweathermap.org](http://openweathermap.org/) - weather data
