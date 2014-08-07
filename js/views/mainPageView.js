@@ -21,6 +21,7 @@ define(function(require) {
 
     return Backbone.View.extend({
         events: {
+            'shown.bs.tab a[role=tab]': 'tabShown',
             'shown.bs.tab a[href="#mainTab"]' : 'renderMainTab',
             'shown.bs.tab a[href="#hourlyTab"]' : 'displayHourlyTab',
             'shown.bs.tab a[href="#dailyTab"]' : 'renderDailyTab',
@@ -47,6 +48,10 @@ define(function(require) {
                 q: this.params.q,
                 units: this.params.units
             };
+        },
+        tabShown: function(){
+            //to resize charts
+            $(window).trigger('resize');
         },
         renderCurrentWeather: function(){
             var view = new CurrentWeatherView({
