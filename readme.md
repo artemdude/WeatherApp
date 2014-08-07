@@ -24,5 +24,5 @@ You can see the demo <a href="http://code.shkolovy.com/code/ui/weather-app/">her
 * [sinon](http://sinonjs.org/) - mocks, stubs, spies
 
 ### Used APIs:
-* [gd.geobytes.com](http://gd.geobytes.com/AutoCompleteCity/) - location autocomplete
+* [gd.geobytes.com](http://geobytes.com/) - location autocomplete
 * [api.openweathermap.org](http://openweathermap.org/) - weather data
