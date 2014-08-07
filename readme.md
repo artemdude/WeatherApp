@@ -1,6 +1,6 @@
 #WeatherApp
 
-This project was created for the sole purpose to play with fancy libraries and APIs.
+This project was created for the sole purpose to play with fancy javascript libraries and APIs without using any server logic.
 You can see the demo <a href="http://code.shkolovy.com/code/ui/weather-app/">here</a>.
 
 ### Used libraries:
