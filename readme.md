@@ -22,7 +22,7 @@ You can see the demo <a href="http://code.shkolovy.com/code/ui/weather-app/">her
 * [typeaheadjs](http://twitter.github.io/typeahead.js/) - autocomplete
 * [jquery-cookie](http://github.com/carhartl/jquery-cookie/) - cookie manager
 
-**Unit testing**
+**Unit testing** 
 * [qunit](http://qunitjs.com/) - unit test framework from jQuery team
 * [sinon](http://sinonjs.org/) - mocks, stubs, spies
 
