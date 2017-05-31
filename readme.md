@@ -1,7 +1,6 @@
 #WeatherApp
 
 This project was created for the sole purpose to play with fancy javascript libraries and APIs without using any server logic.
-You can see the demo <a href="http://code.shkolovy.com/code/ui/weather-app/">here</a>.
 
 ![ScreenShot](https://raw.github.com/artemdude/weather-app/master/screenshots/w-app-1.png)
 ![ScreenShot](https://raw.github.com/artemdude/weather-app/master/screenshots/w-app-2.png)
